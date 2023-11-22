@@ -73,6 +73,7 @@
                             $serie = $datos['serie'];
                             $marca = $datos['marca'];
                             $detsis = $datos['detsis'];
+                            $lic = $datos['sislic'];
                             $sislic = [
                                 1 => 'Si',
                                 2 => 'No',
