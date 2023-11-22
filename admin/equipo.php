@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php include "conexion.php";
+<?php include "../process/conexion.php";
 ?>
 
 <head>
@@ -59,32 +59,56 @@
                     </thead>
                     <tbody>
                         <?php
-                        $sql = $conexion->query("SELECT u.idusu, prinom, segnom, priape,segape,numcel,correo,rol FROM usuario as u
-                        INNER JOIN seguridad as s on s.idusu = u.idusu
+                        $sql = $conexion->query("SELECT c.idcompu, d.serie, d.marca, s.detsis, d.sislic, d.modelo, d.procesador, 
+                        d.tarmad, d.discdur, d.unilec, d.tarvid, d.tarred, m.detmon, t.dettec, o.detmou
+                        FROM det as d
+                        INNER JOIN computador as c ON d.iddetcom=c.idcompu
+                        INNER JOIN monitor as m ON d.monitor=m.idmon
+                        INNER JOIN teclado AS t ON d.teclado=t.idtec
+                        INNER JOIN mouse AS o ON d.mouse=o.idmou
+                        INNER JOIN sisoperativo AS s ON d.sisope=s.idsisop;
                         ");
                         while ($datos = $sql->fetch_array()) {
-                            $idusu = $datos['idusu'];
-                            $Nombre = $datos['prinom'] . " " . $datos['segnom'] . " " . $datos['priape'] . ' ' . $datos['segape'];
-                            $Email = $datos['correo'];
-                            $Cel = $datos['numcel'];
-                            $Rol = $datos['rol'];
-                            $roles = [
-                                1 => 'Administrador',
-                                2 => 'Cliente',
-                                3 => 'Repartidor',
-                                4 => 'Empleado',
+                            $idcompu = $datos['idcompu'];
+                            $serie = $datos['serie'];
+                            $marca = $datos['marca'];
+                            $detsis = $datos['detsis'];
+                            $sislic = [
+                                1 => 'Si',
+                                2 => 'No',
                             ];
-                            if (array_key_exists($Rol, $roles)) {
-                                $nombreRol = $roles[$Rol];
+                            if (array_key_exists($lic, $sislic)) {
+                                $licencia = $sislic[$lic];
                             } else {
-                                $nombreRol = 'Rol Desconocido';
+                                $licencia = 'No se encontro el campo';
                             }
+                            $modelo = $datos['modelo'];
+                            $procesador = $datos['procesador'];
+                            $tarmad = $datos['tarmad'];
+                            $discdur = $datos['discdur'];
+                            $unilec = $datos['unilec'];
+                            $tarvid = $datos['tarvid'];
+                            $tarred = $datos['tarred'];
+                            $detmon = $datos['detmon'];
+                            $dettec = $datos['dettec'];
+                            $detmou = $datos['detmou'];
                             // <th scope='col'>$idusu</th>
                             echo  "<tr style='text-align: center;''>                         
-                        <td>$Nombre</td>  
-                        <td>$Email</td> 
-                        <td>$Cel</td> 
-                        <td>$nombreRol</td>                                               
+                        <td>$idcompu</td>  
+                        <td>$serie</td> 
+                        <td>$marca</td> 
+                        <td>$detsis</td> 
+                        <td>$licencia</td>
+                        <td>$modelo</td>
+                        <td>$procesador</td>
+                        <td>$tarmad</td> 
+                        <td>$discdur</td>
+                        <td>$unilec</td>
+                        <td>$tarvid</td>
+                        <td>$tarred</td>
+                        <td>$detmon</td>
+                        <td>$dettec</td>
+                        <td>$detmou</td>
                        ";
 
                         ?><td>
