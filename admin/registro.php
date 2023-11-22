@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php include "process/conexion.php";?>
+<?php include "../process/conexion.php";?>
 <head>    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -27,29 +27,26 @@
                             <th scope="col">Apellido</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora Inicio</th>
-                            <th scope="col">Hora Final</th>
-                            <th scope="col">Estado</th>
+                            <th scope="col">Hora Final</th>                            
                             <th scope="col">Acciones</th>
                         </tr>
 
                     </thead>
                     <tbody>
                         <?php
-                        $sql = $conexion->query("SELECT u.idusu, prinom, segnom, priape,segape,numcel,correo,rol FROM usuario as u
-                        INNER JOIN seguridad as s on s.idusu = u.idusu
+                        $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape, c.fecuso, c.horini, c.horfin 
+                          From computador c
+                          Inner Join usuario u On c.idusu=u.idusu
+                          Inner Join det d On c.detcompu=d.iddetcom;
                         ");
                         while ($datos = $sql->fetch_array()) {
-                            $idusu = $datos['idusu'];
+                            $id = $datos['c.idcompu'];
+                            $nserie = $datos['d.serie'];
                             $Nombre = $datos['prinom'] . " " . $datos['segnom'] . " " . $datos['priape'] . ' ' . $datos['segape'];
                             $Email = $datos['correo'];
                             $Cel = $datos['numcel'];
                             $Rol = $datos['rol'];
-                            $roles = [
-                                1 => 'Administrador',
-                                2 => 'Cliente',
-                                3 => 'Repartidor',
-                                4 => 'Empleado',
-                            ];
+                            
                             if (array_key_exists($Rol, $roles)) {
                                 $nombreRol = $roles[$Rol];
                             } else {
@@ -57,11 +54,13 @@
                             }
                             // <th scope='col'>$idusu</th>
                             echo  "<tr style='text-align: center;''>                         
-                        <td>$Nombre</td>  
-                        <td>$Email</td> 
-                        <td>$Cel</td> 
-                        <td>$nombreRol</td>                                               
-                       ";
+                            <td>$id</td>  
+                            <td>$nserie</td>  
+                            <td>$Nombre</td>                                               
+                            <td>$Nombre</td>  
+                            <td>$Nombre</td>  
+                            <td>$Nombre</td>                              
+                            <td>$Nombre</td>";
 
                         ?><td>
                                 <a class="btn btn-outline-danger m-1" onclick="eliminar(<?php echo $idusu ?>)"><b>Eliminar</b></a>
