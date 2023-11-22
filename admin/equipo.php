@@ -16,7 +16,7 @@
     <meta property="og:url" content="" />
     <meta property="og:site_name" content="SVMeEx" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <!-- Inicio Menu TOP -->
 <header class="header-bg-color" id="topheader">
@@ -113,7 +113,10 @@
                        ";
 
                         ?><td>
-                                <a class="btn btn-outline-danger m-1" onclick="eliminar(<?php echo $idusu ?>)"><b>Eliminar</b></a>
+                                <form action="../process/detequipo.php" method="POST">
+                                    <input type="hidden" value="<?php echo $idcompu;?>" name="id">
+                                    <button type="submit" class="btn btn-outline-danger m-1"><b>Eliminar</b></button>
+                                </form>
                                 <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Editar</b></a>
                             </td>
                             </tr><?php

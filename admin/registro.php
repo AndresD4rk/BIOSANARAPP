@@ -60,7 +60,10 @@
                             <td>$horfin</td>";
 
                         ?><td>
-                                <a class="btn btn-outline-danger m-1" onclick="eliminar(<?php echo $idusu ?>)"><b>Eliminar</b></a>
+                                <form action="../process/detregistro.php" method="POST">
+                                    <input type="hidden" value="<?php echo $id;?>" name="id">
+                                    <button type="submit" class="btn btn-outline-danger m-1"><b>Eliminar</b></button>
+                                </form>
                                 <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Editar</b></a>
                             </td>
                             </tr><?php
