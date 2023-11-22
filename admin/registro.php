@@ -23,8 +23,8 @@
                         <tr style="text-align: center;">
                             <th scope="col">ID</th>
                             <th scope="col">N° Serie</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora Inicio</th>
                             <th scope="col">Hora Final</th>                            
@@ -34,33 +34,30 @@
                     </thead>
                     <tbody>
                         <?php
-                        $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape, c.fecuso, c.horini, c.horfin 
+                        $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
                           From computador c
                           Inner Join usuario u On c.idusu=u.idusu
                           Inner Join det d On c.detcompu=d.iddetcom;
                         ");
                         while ($datos = $sql->fetch_array()) {
-                            $id = $datos['c.idcompu'];
-                            $nserie = $datos['d.serie'];
-                            $Nombre = $datos['prinom'] . " " . $datos['segnom'] . " " . $datos['priape'] . ' ' . $datos['segape'];
-                            $Email = $datos['correo'];
-                            $Cel = $datos['numcel'];
-                            $Rol = $datos['rol'];
+                            $id = $datos['idcompu'];
+                            $nserie = $datos['serie'];
+                            $name = $datos['prinom'] . " " . $datos['segnom'];
+                            $segname = $datos['priape'] . ' ' . $datos['segape'];
+                            $fecuso = $datos['fecuso'];
+                            $horini = $datos['horini'];
+                            $horfin  = $datos['horfin'];
                             
-                            if (array_key_exists($Rol, $roles)) {
-                                $nombreRol = $roles[$Rol];
-                            } else {
-                                $nombreRol = 'Rol Desconocido';
-                            }
+                         
                             // <th scope='col'>$idusu</th>
                             echo  "<tr style='text-align: center;''>                         
                             <td>$id</td>  
                             <td>$nserie</td>  
-                            <td>$Nombre</td>                                               
-                            <td>$Nombre</td>  
-                            <td>$Nombre</td>  
-                            <td>$Nombre</td>                              
-                            <td>$Nombre</td>";
+                            <td>$name</td>                                               
+                            <td>$segname</td>  
+                            <td>$fecuso</td>  
+                            <td>$horini</td>  
+                            <td>$horfin</td>";
 
                         ?><td>
                                 <a class="btn btn-outline-danger m-1" onclick="eliminar(<?php echo $idusu ?>)"><b>Eliminar</b></a>
