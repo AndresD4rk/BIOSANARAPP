@@ -59,17 +59,16 @@
                     </thead>
                     <tbody>
                         <?php
-                        $sql = $conexion->query("SELECT c.idcompu, d.serie, d.marca, s.detsis, d.sislic, d.modelo, d.procesador, 
+                        $sql = $conexion->query("SELECT d.iddetcom,d.serie, d.marca, s.detsis, d.sislic, d.modelo, d.procesador, 
                         d.tarmad, d.discdur, d.unilec, d.tarvid, d.tarred, m.detmon, t.dettec, o.detmou
                         FROM det as d
-                        INNER JOIN computador as c ON d.iddetcom=c.idcompu
                         INNER JOIN monitor as m ON d.monitor=m.idmon
                         INNER JOIN teclado AS t ON d.teclado=t.idtec
                         INNER JOIN mouse AS o ON d.mouse=o.idmou
                         INNER JOIN sisoperativo AS s ON d.sisope=s.idsisop;
                         ");
                         while ($datos = $sql->fetch_array()) {
-                            $idcompu = $datos['idcompu'];
+                            $idcompu = $datos['iddetcom'];
                             $serie = $datos['serie'];
                             $marca = $datos['marca'];
                             $detsis = $datos['detsis'];
