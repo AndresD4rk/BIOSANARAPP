@@ -152,6 +152,3 @@
 
 </div>
 
-<?php
-include_once url_app . '/views/resources/footer.php';
-?>
