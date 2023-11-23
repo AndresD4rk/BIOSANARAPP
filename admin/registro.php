@@ -15,7 +15,7 @@
     <main class="container-fluid mt-2">
         <div class="row">
             <div class="col-12  mb-2">
-                <a href="AddUsu.php" class="btn btn-outline-success w-100"><i class="fa-solid fa-user-plus me-2"></i><b>Agregar Usuario</b></a>
+                <a href="addregistro.php" class="btn btn-outline-success w-100"><i class="fa-solid fa-user-plus me-2"></i><b>Agregar Registro</b></a>
             </div>
             <div class="col-12">
                 <table class="table table-responsive table-hover" id="dataTable-1">
