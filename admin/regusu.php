@@ -72,7 +72,7 @@
 
 <script>
 function irlogin(){
-    window.location= "../index1.php";
+    window.location= "../index.php";
 }
 </script>
 
