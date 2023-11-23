@@ -10,18 +10,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $id = $_POST['id'];
         echo $id;
-        die;
-        $sql = $conexion->query("DELETE FROM carrito            
-            WHERE idusu=$usu AND estado = 1");                   
+        // die;
+        $sql = $conexion->query("DELETE FROM det WHERE iddetcom=$id");                   
         if ($sql) {
             ?>
             <script>alert("");            
-                 window.location="../admin/equipo";</script>
+                 window.location="../admin/equipo.php";</script>
             <?php
         } else {
             ?>
             <script>alert("Error Borrado");            
-                window.location="../admin/equipo";</script>
+                window.location="../admin/equipo.php";</script>
             <?php
         }
     }
