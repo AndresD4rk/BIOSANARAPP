@@ -21,37 +21,33 @@ session_start();
 </head>
 <!-- Inicio Menu TOP -->
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">___BIOSSANAR APP___</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1f1f1f;">
+<img src="../img/LogoPeq.png" alt="LOGO" style="height: 60px;">
+        <a class="navbar-brand text-white" href="#">BIOSSANAR APP</a>    
+    
+        
             <ul class="navbar-nav ml-auto">
 
                 <?php if ($_SESSION['rol'] == 1) {
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="registro.php">Registros</a>
+                    <a class="nav-link text-white" href="registro.php">Registros</a>
                 </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="equipo.php">Equipos</a>
+                    <a class="nav-link text-white" href="equipo.php">Equipos</a>
                 </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="reporte.php">Reportes</a>
+                    <a class="nav-link text-white" href="reporte.php">Reportes</a>
                 </li>';
                 }
                 if ($_SESSION['rol'] == 2) {
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="registro.php">Registros</a>
+                    <a class="nav-link text-white" href="registro.php">Registros</a>
                 </li>';
                 } ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../process/exit.php">Salir</a>
+                    <a class="nav-link text-white" href="../process/exit.php">Salir</a>
                 </li>
-
-
-            </ul>
-        </div>
+            </ul>        
     </nav>
 </header>
 <!-- Fin Menu TOP -->
@@ -103,7 +99,7 @@ session_start();
                             $lic = $datos['sislic'];
                             $sislic = [
                                 1 => 'Si',
-                                2 => 'No',
+                                0 => 'No',
                             ];
                             if (array_key_exists($lic, $sislic)) {
                                 $licencia = $sislic[$lic];
@@ -144,7 +140,11 @@ session_start();
                                     <input type="hidden" value="<?php echo $idcompu; ?>" name="id">
                                     <button type="submit" class="btn btn-outline-danger m-1"><b>Eliminar</b></button>
                                 </form>
-                                <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Editar</b></a>
+                                <form action="ediequipo.php" method="POST">
+                                    <input type="hidden" value="<?php echo $idcompu; ?>" name="id">
+                                    <button type="submit" class="btn btn-outline-success m-1"><b>Editar</b></button>
+                                </form>
+                                <!-- <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Editar</b></a> -->
                             </td>
                             </tr><?php
                                 }

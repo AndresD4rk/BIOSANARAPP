@@ -8,11 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             history.back();</script>
         <?php
     } else {
-        $id = $_POST['id'];
-        echo $id;
-        // die;
+        $id = $_POST['id'];            
         try {
-            $stmt = $conexion->prepare("DELETE FROM det WHERE iddetcom = ?");
+            $stmt = $conexion->prepare("DELETE FROM reportes WHERE idrep =  ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
         
@@ -21,14 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ?>
                 <script>
                     alert("Registro Eliminado Exitosamente!");
-                    window.location="../admin/equipo.php";
+                    window.location="../admin/reporte.php";
                 </script>
                 <?php
             } else {
                 ?>
                 <script>
                     alert("No se encontró el registro con el ID proporcionado.");
-                    window.location="../admin/equipo.php";
+                    window.location="../admin/reporte.php";
                 </script>
                 <?php
             }
@@ -40,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
             <script>
                 alert("Error: <?php echo $e->getMessage(); ?>");
-                window.location="../admin/equipo.php";
+                window.location="../admin/reporte.php";
             </script>
             <?php
         }

@@ -2,14 +2,12 @@
 include "conexion.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
-    $comp = $_POST["idcom"];
+    $reg = $_POST["reg"];    
     $usu = $_POST["usu"];    
-    $fecha = $_POST["fecha"];
-    $horaInicio = $_POST["horainicio"];
-    $horaFinal = $_POST["horafinal"];
-    $fechaFormateada = date("Y-m-d", strtotime($fecha));   
-    $sql1 = $conexion->query("INSERT INTO computador (idcompu, detcompu, idusu, fecuso, horini, horfin)
-    VALUES ('$id', '$comp', '$usu', '$fechaFormateada', '$horaInicio', '$horaFinal');");
+    $comp = $_POST["idcom"];
+    $det = $_POST["det"];    
+    $sql1 = $conexion->query("INSERT INTO reportes (idrep, idcom, idusu, iddet, detpro, estpro)
+    VALUES ($id, $reg, $usu, $comp, '$det',0);");
     if ($sql1) {
         ?>
             <script>alert("Registro Exitoso!");            

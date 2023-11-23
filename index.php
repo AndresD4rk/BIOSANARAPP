@@ -13,7 +13,7 @@
 <form class="logo formid" id="formlogin" action="process/validar.php" method="POST">
 <div  class="mb-4">
   <!-- <h1 class="text-center">MercaExpress</h1> -->
-  <img src="../assets/img/logoME.webp" class="col-6 rounded mx-auto d-block" alt="...">
+  <img src="img/biossanarLogo.png" class="col-6 rounded mx-auto d-block" alt="...">
 </div>
 <div class="col-12 mx-auto">
   <div  class="mb-3 mt-5">
@@ -30,7 +30,7 @@
   </div> -->
   <div class="row">
     <div class="col-6 text-start"><a onclick="registrar()" class="btn btn-warning">Registrarse</a></div>
-    <div class="col-6 text-end   mb-2"><button type="submit" class="btn btn-success2">Ingresar</button></div>
+    <div class="col-6 text-end mb-2"><button type="submit" class="btn btn-success">Ingresar</button></div>
   </div>
   
   
@@ -44,7 +44,7 @@
 </html>
 <script>
 function registrar(){
-    window.location= "newUser.php";
+    window.location= "admin/regusu.php";
 }
 </script>
 

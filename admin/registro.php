@@ -3,43 +3,41 @@
 <?php include "../process/conexion.php";
 session_start();
 ?>
-<head>    
+<head>   
+    <title>Biossanar App</title>
+    <link rel="icon" href="../img/LogoPeq.png" type="image/png"> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <!-- Inicio Menu TOP -->
 <header>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">___BIOSSANAR APP___</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1f1f1f;">
+<img src="../img/LogoPeq.png" alt="LOGO" style="height: 60px;">
+        <a class="navbar-brand text-white" href="#">BIOSSANAR APP</a>    
+    
+        
             <ul class="navbar-nav ml-auto">
 
                 <?php if ($_SESSION['rol'] == 1) {
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="registro.php">Registros</a>
+                    <a class="nav-link text-white" href="registro.php">Registros</a>
                 </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="equipo.php">Equipos</a>
+                    <a class="nav-link text-white" href="equipo.php">Equipos</a>
                 </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="reporte.php">Reportes</a>
+                    <a class="nav-link text-white" href="reporte.php">Reportes</a>
                 </li>';
                 }
                 if ($_SESSION['rol'] == 2) {
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="registro.php">Registros</a>
+                    <a class="nav-link text-white" href="registro.php">Registros</a>
                 </li>';
                 } ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="../process/exit.php">Salir</a>
+                    <a class="nav-link text-white" href="../process/exit.php">Salir</a>
                 </li>
-
-
-            </ul>
-        </div>
+            </ul>        
     </nav>
 </header>
 <!-- Fin Menu TOP -->
@@ -60,23 +58,24 @@ session_start();
                             <th scope="col">Apellidos</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Hora Inicio</th>
-                            <th scope="col">Hora Final</th>                            
-                            <th scope="col">Acciones</th>
+                            <th scope="col">Hora Final</th>                                                    
+                            <th scope="col">Acciones</th>                            
                         </tr>
 
                     </thead>
                     <tbody>
                         <?php
                         $usu=$_SESSION['rol'];
+                        $usuid=$_SESSION['idusu'];
                         if($usu==2){
-                            $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
+                            $sql = $conexion->query("SELECT c.idcompu,d.iddetcom, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
                             From computador c
                             Inner Join usuario u On c.idusu=u.idusu
                             Inner Join det d On c.detcompu=d.iddetcom
-                            WHERE c.idusu=$usu;
+                            WHERE c.idusu=$usuid;
                           ");
                         }else{
-                        $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
+                        $sql = $conexion->query("SELECT c.idcompu,d.iddetcom, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
                           From computador c
                           Inner Join usuario u On c.idusu=u.idusu
                           Inner Join det d On c.detcompu=d.iddetcom;
@@ -84,6 +83,7 @@ session_start();
                         }
                         while ($datos = $sql->fetch_array()) {
                             $id = $datos['idcompu'];
+                            $com = $datos['iddetcom'];
                             $nserie = $datos['serie'];
                             $name = $datos['prinom'] . " " . $datos['segnom'];
                             $segname = $datos['priape'] . ' ' . $datos['segape'];
@@ -101,14 +101,27 @@ session_start();
                             <td>$fecuso</td>  
                             <td>$horini</td>  
                             <td>$horfin</td>";
-
+                            if($_SESSION['rol']==2){ ?><td>                                
+                                <form action="addreporte.php" method="POST">
+                                    <input type="hidden" value="<?php echo $id;?>" name="reg">
+                                    <input type="hidden" value="<?php echo $com;?>" name="com">
+                                    <button type="submit" class="btn btn-outline-warning m-1"><b>Reportar</b></button>
+                                </form>                                
+                            </td><?php }
+                            if($_SESSION['rol']==1){                                                            
                         ?><td>
                                 <form action="../process/detregistro.php" method="POST">
                                     <input type="hidden" value="<?php echo $id;?>" name="id">
                                     <button type="submit" class="btn btn-outline-danger m-1"><b>Eliminar</b></button>
                                 </form>
-                                <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Editar</b></a>
-                            </td>
+                                <form action="addreporte.php" method="POST">
+                                    <input type="hidden" value="<?php echo $id;?>" name="reg">
+                                    <input type="hidden" value="<?php echo $com;?>" name="com">
+                                    <button type="submit" class="btn btn-outline-warning m-1"><b>Reportar</b></button>
+                                </form>
+                                <!-- <a class="btn btn-outline-success m-1" href="EdiUsu.php?id=<?php echo $idusu ?>"><b>Reportar</b></a> -->
+                            </td><?php }?>
+                            
                             </tr><?php
                                 }
                                     ?>

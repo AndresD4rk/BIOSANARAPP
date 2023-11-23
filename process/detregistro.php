@@ -2,16 +2,14 @@
 session_start();
 include "conexion.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (empty($_SESSION['idcompu'])) {
+    if (empty($_SESSION['rol']) && ($_SESSION['rol']==1)) {
         ?>
-        <script>alert("Error");            
+        <script>alert("Error!");            
             history.back();</script>
         <?php
     } else {
-        $id = $_POST['id'];
-        echo $id;
-        //die;
-        $sql = $conexion->query("DELETE FROM computadores WHERE idcompu=$id");                   
+        $id = $_POST['id'];        
+        $sql = $conexion->query("DELETE FROM computador WHERE idcompu=$id");                   
         if ($sql) {
             ?>
             <script>alert("Registro Eliminado");            
@@ -19,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php
         } else {
             ?>
-            <script>alert("Error Borrado");            
+            <script>alert("Error!");            
                 window.location="../admin/registro.php";</script>
             <?php
         }

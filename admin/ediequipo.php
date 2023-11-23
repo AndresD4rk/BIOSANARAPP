@@ -42,7 +42,32 @@ session_start();
 
 <body>
     <main class="container-fluid mt-2">
-        <form id="formid" action="../process/newequipo.php" method="POST">
+        <?php 
+        $detid=$_POST['id'];
+        $sql = $conexion->query("SELECT *
+        FROM det
+        WHERE iddetcom = $detid;
+        ");
+        if ($datos = $sql->fetch_array()) {
+            $iddetcom=$datos['iddetcom'];
+            $serie=$datos['serie'];
+            $marca=$datos['marca'];
+            $sisope=$datos['sisope'];
+            $sislic=$datos['sislic'];
+            $modelo=$datos['modelo'];
+            $procesador=$datos['procesador'];
+            $tarmad=$datos['tarmad'];
+            $discdur=$datos['discdur'];
+            $unilec=$datos['unilec'];
+            $tarvid=$datos['tarvid'];
+            $tarred=$datos['tarred'];
+            $monitor=$datos['monitor'];
+            $teclado=$datos['teclado'];
+            $mouse=$datos['mouse'];
+
+        }
+        ?> 
+        <form id="formid" action="../process/updequipo.php" method="POST">
             <div class="mb-4">
                 <h2 class="text-center">Registrar Equipo</h2>
             </div>
@@ -59,21 +84,19 @@ session_start();
                             $id++;
                         } else {
                             $id++;
-                        } ?>
-                        <input disabled type="text" class="form-control" value="<?php echo $id; ?>">
-                        <input hidden type="text" class="form-control" value="<?php echo $id; ?>" name="id">
+                        } ?>                        
+                        <input readonly type="text" class="form-control" value="<?php echo $iddetcom; ?>" name="id">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="nserie" class="form-label">N° Serie</label>
-                        <input type="text" class="form-control" name="nserie">
+                        <input type="text" class="form-control" name="nserie" value="<?php echo $serie; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" name="marca">
-                    </div>
-
+                        <input type="text" class="form-control" name="marca" value="<?php echo $marca; ?>">
+                    </div>                    
                     <div class="col-6 mb-3 mt-3">
                         <label for="sistemaOperativo" class="form-label">Sistema Operativo</label>
                         <select id="select-categoria" class="form-select" aria-label="Default select example" name="sistemaoperativo" required>
@@ -82,7 +105,12 @@ session_start();
                             $sql = $conexion->query("SELECT * 
                                 FROM sisoperativo");
                             while ($datos = $sql->fetch_array()) {
-                                echo '<option value="' . $datos['idsisop'] . '">' . $datos['detsis'] . '</option>';
+                                if($datos['idsisop']==$sisope){
+                                    echo '<option selected value="' . $datos['idsisop'] . '">' . $datos['detsis'] . '</option>';
+                                }else{  
+                                    echo '<option value="' . $datos['idsisop'] . '">' . $datos['detsis'] . '</option>';
+                                }
+                              
                             }
                             ?>
                         </select>
@@ -93,37 +121,37 @@ session_start();
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" name="modelo">
+                        <input type="text" class="form-control" name="modelo" value="<?php echo $modelo; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="procesador" class="form-label">Procesador</label>
-                        <input type="text" class="form-control" name="procesador">
+                        <input type="text" class="form-control" name="procesador" value="<?php echo $procesador; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="tarjetaMadre" class="form-label">Tarjeta Madre</label>
-                        <input type="text" class="form-control" name="tarjetamadre">
+                        <input type="text" class="form-control" name="tarjetamadre" value="<?php echo $tarmad; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="discoDuro" class="form-label">Disco Duro</label>
-                        <input type="text" class="form-control" name="discoduro">
+                        <input type="text" class="form-control" name="discoduro" value="<?php echo $discdur; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="unidadLectora" class="form-label">Unidad Lectora</label>
-                        <input type="text" class="form-control" name="unidadlectora">
+                        <input type="text" class="form-control" name="unidadlectora" value="<?php echo $unilec; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="tarjetaVideo" class="form-label">Tarjeta de Video</label>
-                        <input type="text" class="form-control" name="tarjetavideo">
+                        <input type="text" class="form-control" name="tarjetavideo" value="<?php echo $tarvid; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
                         <label for="tarjetaRed" class="form-label">Tarjeta de Red</label>
-                        <input type="text" class="form-control" name="tarjetared">
+                        <input type="text" class="form-control" name="tarjetared" value="<?php echo $tarred; ?>">
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
@@ -134,7 +162,12 @@ session_start();
                             $sql = $conexion->query("SELECT * 
                                 FROM monitor");
                             while ($datos = $sql->fetch_array()) {
-                                echo '<option value="' . $datos['idmon'] . '">' . $datos['detmon'] . '</option>';
+                                if($datos['idmon']==$monitor){
+                                    echo '<option selected value="' . $datos['idmon'] . '">' . $datos['detmon'] . '</option>';
+                                }else{
+                                    echo '<option value="' . $datos['idmon'] . '">' . $datos['detmon'] . '</option>';
+                                }
+                                
                             }
                             ?>
                         </select>
@@ -149,7 +182,12 @@ session_start();
                             $sql = $conexion->query("SELECT * 
                                 FROM teclado");
                             while ($datos = $sql->fetch_array()) {
-                                echo '<option value="' . $datos['idtec'] . '">' . $datos['dettec'] . '</option>';
+                                if($datos['idtec']==$teclado){
+                                    echo '<option selected value="' . $datos['idtec'] . '">' . $datos['dettec'] . '</option>';
+                                }else{
+                                    echo '<option value="' . $datos['idtec'] . '">' . $datos['dettec'] . '</option>';
+                                }
+                                
                             }
                             ?>
                         </select>
@@ -165,14 +203,27 @@ session_start();
                             $sql = $conexion->query("SELECT * 
                                 FROM mouse");
                             while ($datos = $sql->fetch_array()) {
-                                echo '<option value="' . $datos['idmou'] . '">' . $datos['detmou'] . '</option>';
+                                if($datos['idmou']==$mouse){
+                                    echo '<option selected value="' . $datos['idmou'] . '">' . $datos['detmou'] . '</option>';
+                                }else{
+                                    echo '<option value="' . $datos['idmou'] . '">' . $datos['detmou'] . '</option>';
+                                }
+                                
                             }
                             ?>
                         </select>
                     </div>
                     <div class="col-6 mb-3 mt-3">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="licencia" role="switch" id="flexSwitchCheckDefault">
+                            <?php 
+                            if($sislic==1){ 
+                                echo '<input class="form-check-input" type="checkbox" name="licencia" role="switch" id="flexSwitchCheckDefault" checked>';
+                            }else{
+echo '<input class="form-check-input" type="checkbox" name="licencia" role="switch" id="flexSwitchCheckDefault">';
+                            }
+                                ?>
+                        
+                            
                             <label class="form-check-label" for="flexSwitchCheckDefault">Licencia</label>
                         </div>
                     </div>

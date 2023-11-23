@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <?php include "../process/conexion.php";
 session_start();
+
+if (!($_SERVER['REQUEST_METHOD'] === 'POST')) {
+?>
+    <script>
+        alert("Error");
+        history.back();
+    </script>
+<?php }
+$usuid = $_SESSION['idusu'];
+$name = $_SESSION['nom1'] . " " . $_SESSION['nom2'] . " " . $_SESSION['ape1'] . " " . $_SESSION['ape2'];
 ?>
 
 <head>
@@ -46,72 +57,44 @@ session_start();
     <!-- Fin Menu LATERAL -->
 
     <main class="container-fluid mt-2">
-        <form id="formid" action="../process/newregistro.php" method="POST">
+        <form id="formid" action="../process/newreporte.php" method="POST">
             <div class="mb-4">
-                <h2 class="text-center">Registrar</h2>
+                <h2 class="text-center">Reportar Problema</h2>
             </div>
             <div class="col-8 mx-auto">
                 <div class="row">
                     <div class="col-6 mb-3 mt-3">
                         <label for="id" class="form-label">ID</label>
-                        
-                        <?php 
+
+                        <?php
                         $id;
-                        $sql = $conexion->query("SELECT MAX(idcompu) FROM computador");
+                        $sql = $conexion->query("SELECT MAX(idrep) FROM reportes");
                         $datos = $sql->fetch_array();
                         if ($datos) {
-                            $id = $datos["MAX(idcompu)"];
+                            $id = $datos["MAX(idrep)"];
                             $id++;
                         } else {
                             $id++;
-                        }?>
-                        <input type="text" class="form-control" name="id" value="<?php echo $id; ?>" hidden>
-                        <input type="text" class="form-control" value="<?php echo $id; ?>" disabled>
+                        } ?>
+                        <input type="text" class="form-control" name="id" value="<?php echo $id; ?>" readonly>                        
                     </div>
 
                     <div class="col-6 mb-3 mt-3">
-                        <label for="nserie" class="form-label">Computador</label>
-                        <!-- <input type="text" class="form-control" name="nserie"> -->
-                        <select id="select-categoria" class="form-select" aria-label="Default select example" name="idcom" required>
-                            <option value="">Elija un Computador</option>
-                            <?php
-                            $sql = $conexion->query("SELECT iddetcom 
-                                FROM det");
-                            while ($datos = $sql->fetch_array()) {
-                                echo '<option value="' . $datos['iddetcom'] . '">' . $datos['iddetcom'].'</option>';
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <div class="col-6 mb-3 mt-3">
-                        <label for="nombre" class="form-label">Usuario</label>                                    
-                            <?php
-                            $usuid=$_SESSION['idusu'];
-                            $sql = $conexion->query("SELECT * 
-                            FROM usuario WHERE idusu=$usuid");
-                        if ($datos = $sql->fetch_array()) {
-                            $usuid=$datos['idusu'];
-                            $usuname=$datos['prinom']." ".$datos['segnom']." ".$datos['priape']." ".$datos['segape'];
-                        }                        
-                            ?>
-                            <input type="text" class="form-control" name="usu" value="<?php echo $usuid; ?>" hidden>
-                        <input type="text" class="form-control" value="<?php echo $usuname; ?>" disabled>
-                        </select>                        
+                        <label for="nserie" class="form-label">Computador</label>                        
+                        <input type="text" class="form-control" readonly name="idcom" value="<?php echo $_POST['com']; ?>">
                     </div>
                     <div class="col-6 mb-3 mt-3">
-                        <label for="fecha" class="form-label">Fecha</label>
-                        <input type="date" class="form-control" name="fecha">
+                        <label for="nombre" class="form-label">Usuario</label>
+                        <input type="text" class="form-control" name="usu" value="<?php echo $usuid; ?>" hidden>  
+                        <input type="text" class="form-control" value="<?php echo $name; ?>" readonly>                                                                                      
                     </div>
-
                     <div class="col-6 mb-3 mt-3">
-                        <label for="horaInicio" class="form-label">Hora Inicio</label>
-                        <input type="time" class="form-control" name="horainicio">
+                        <label for="nombre" class="form-label">Uso Registro</label>
+                        <input type="text" class="form-control" name="reg" value="<?php echo $_POST['reg']; ?>" readonly>                                            
                     </div>
-
-                    <div class="col-6 mb-3 mt-3">
-                        <label for="horaFinal" class="form-label">Hora Final</label>
-                        <input type="time" class="form-control" name="horafinal">
+                    <div class="col-12 mb-3 mt-3">
+                        <label for="horaInicio" class="form-label">Descripción Problema</label>
+                        <textarea class="form-control" name="det"></textarea>
                     </div>
                 </div>
 
