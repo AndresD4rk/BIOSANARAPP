@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php include "../process/conexion.php";?>
+<?php include "../process/conexion.php";
+session_start();
+?>
 <head>    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <!-- Inicio Menu TOP -->
-<header class="header-bg-color" id="topheader">
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">___BIOSSANAR APP___</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
 
+                <?php if ($_SESSION['rol'] == 1) {
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="registro.php">Registros</a>
+                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="equipo.php">Equipos</a>
+                </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="reporte.php">Reportes</a>
+                </li>';
+                }
+                if ($_SESSION['rol'] == 2) {
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="registro.php">Registros</a>
+                </li>';
+                } ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="../process/exit.php">Salir</a>
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
 </header>
 <!-- Fin Menu TOP -->
 
@@ -34,11 +67,21 @@
                     </thead>
                     <tbody>
                         <?php
+                        $usu=$_SESSION['rol'];
+                        if($usu==2){
+                            $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
+                            From computador c
+                            Inner Join usuario u On c.idusu=u.idusu
+                            Inner Join det d On c.detcompu=d.iddetcom
+                            WHERE c.idusu=$usu;
+                          ");
+                        }else{
                         $sql = $conexion->query("SELECT c.idcompu, d.serie, u.prinom, u.priape,u.segnom, u.segape, c.fecuso, c.horini, c.horfin 
                           From computador c
                           Inner Join usuario u On c.idusu=u.idusu
                           Inner Join det d On c.detcompu=d.iddetcom;
                         ");
+                        }
                         while ($datos = $sql->fetch_array()) {
                             $id = $datos['idcompu'];
                             $nserie = $datos['serie'];

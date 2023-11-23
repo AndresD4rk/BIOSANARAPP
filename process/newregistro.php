@@ -1,5 +1,5 @@
 <?php
-$idusu = 0;
+$id = 0;
 include "conexion.php";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST["id"];
@@ -9,17 +9,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fecha = $_POST["fecha"];
     $horaInicio = $_POST["horaInicio"];
     $horaFinal = $_POST["horaFinal"];
-    $sql = $conexion->query("SELECT MAX(idusu) FROM usuario");
+    $sql = $conexion->query("SELECT MAX(idcompu) FROM computador");
     $datos = $sql->fetch_array();
     if ($datos) {
-        $idusu = $datos["MAX(idusu)"];
-        $idusu++;
+        $id = $datos["MAX(idcompu)"];
+        $id++;
     } else {
-        $idusu++;
+        $id++;
     }
     $sql1 = $conexion->query("INSERT INTO
-        a (idusu,prinom,segnom,priape,segape,numcel,rol)
-        VALUES ($idusu,'$nom1','$nom2','$ape1','$ape2','$cel',$rol)");
+        computador (idcompu,detcompu,idusu,fecuso,horini,horfin,estcom)
+        VALUES ($id,'$nom1','$nom2','$fecha','$horaInicio','$horaFinal',$rol)");
     if ($sql1) {
         $sql2 = $conexion->query("INSERT INTO
         a (correo, clave, idusu)

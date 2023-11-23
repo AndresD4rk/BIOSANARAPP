@@ -25,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['ape1'] = $datos1['priape'];
                 $_SESSION['ape2'] = $datos1['segape'];
                 $_SESSION['rol'] = $datos1['rol'];
-                ?><script>window.location = "../admin/registro.php";</script><?php                
+                if ($_SESSION['rol']==1){
+                    ?><script>window.location = "../admin/registro.php";</script><?php                
+                }else{
+                    ?><script>window.location = "../admin/addregistro.php";</script><?php                
+                }
+                
             } 
         } else{
             ?><script>history.back();</script><?php                
